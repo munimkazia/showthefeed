@@ -10,60 +10,46 @@
         .hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; text-align: center; }
         h1 { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 900; margin: 0; letter-spacing: -0.04em; line-height: 1; }
         .accent { color: var(--brand); }
-        p { font-size: 1.25rem; color: #64748b; margin: 1.5rem 0 2rem; max-width: 500px; }
+        p { font-size: 1.1rem; color: #64748b; margin: 1.5rem 0 2rem; max-width: 550px; line-height: 1.5; }
         .input-group { display: flex; gap: 0.5rem; background: white; padding: 0.6rem; border-radius: 16px; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); border: 1px solid #e2e8f0; width: 100%; max-width: 450px; }
         input { flex: 1; border: none; padding: 0.8rem 1.2rem; font-size: 1.1rem; outline: none; border-radius: 12px; }
         button { background: var(--dark); color: white; border: none; padding: 0 1.5rem; border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.2s; }
         button:hover { background: var(--brand); }
-        .info { padding: 4rem 2rem; background: white; border-top: 1px solid #e2e8f0; text-align: center; }
-        .grid { display: grid; grid-template-cols: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; text-align: left; }
-        .card h3 { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brand); }
-        .footer { padding: 2rem; font-size: 0.8rem; color: #94a3b8; text-align: center; border-top: 1px solid #f1f5f9; }
-        code { background: #e2e8f0; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace; font-weight: bold; }
-        a { color: var(--dark); text-decoration: underline; font-weight: 700; }
+        .footer { padding: 3rem 2rem; font-size: 0.85rem; color: #94a3b8; text-align: center; border-top: 1px solid #f1f5f9; }
+        code { background: #e2e8f0; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace; font-weight: bold; color: var(--dark); }
+        a { color: #94a3b8; text-decoration: underline; }
         a:hover { color: var(--brand); }
     </style>
 </head>
 <body>
     <div class="hero">
         <h1>SHOW THE <span class="accent">FEED.</span></h1>
-        <p>A simple tool to bypass social media login walls using Google as a proxy. Showing newest results from the <strong>last 7 days</strong>.</p>
+        <p>
+            Enter a username to see their newest posts from the <strong>last 7 days</strong>.<br/>
+            We use Google's search index to bypass social media login walls—no account required.
+        </p>
         
         <div class="input-group">
             <input type="text" id="username" placeholder="Enter X/Twitter username..." onkeypress="if(event.key === 'Enter') redirect()">
             <button onclick="redirect()">GO</button>
         </div>
-        <div style="margin-top: 1.5rem; font-size: 0.9rem; color: #94a3b8;">
-            Try it: <code>showthefeed.com/irishrail</code>
+        <div style="margin-top: 2rem; font-size: 0.9rem; color: #94a3b8;">
+            Quick link: <code>showthefeed.com/username</code>
         </div>
     </div>
 
-    <section class="info">
-        <div class="grid">
-            <div class="card">
-                <h3>The Problem</h3>
-                <p style="font-size: 1rem;">Public bodies are gating vital information behind private logins. If you don't have an account, you don't get the update.</p>
-            </div>
-            <div class="card">
-                <h3>The Bypass</h3>
-                <p style="font-size: 1rem;">X still allows Google to crawl public profiles. This tool redirects you to a chronological search of the last 7 days of tweets.</p>
-            </div>
-            <div class="card">
-                <h3>The Campaign</h3>
-                <p style="font-size: 1rem;">Built by <a href="mailto:munim2020@gmail.com">Munim Kazia</a> as part of the <a href="https://openpublicinfo.ie">OpenPublicInfo.ie</a> movement.</p>
-            </div>
-        </div>
-    </section>
-
     <footer class="footer">
-        &copy; 2026 ShowTheFeed.com | No data is stored. No accounts required.
+        Built by Munim Kazia &bull; 
+        Part of the <a href="https://openpublicinfo.ie">OpenPublicInfo.ie</a> campaign &bull; 
+        &copy; 2026 ShowTheFeed.com
     </footer>
 
     <script>
         function redirect() {
             let user = document.getElementById('username').value.trim();
-            user = user.replace('@', ''); 
-            if (user) window.location.href = '/' + user;
+            if (!user) return;
+            user = user.replace('@', '').split('/')[0]; 
+            window.location.href = '/' + user;
         }
     </script>
 </body>
