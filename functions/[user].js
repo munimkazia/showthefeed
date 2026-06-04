@@ -3,18 +3,19 @@ export async function onRequestGet(context) {
   const username = params.user;
   const url = new URL(request.url);
   
-  // Default to a 1-week window if no specific param is provided.
   const isRecent = url.searchParams.get('recent') !== 'false';
 
   if (!username || username === 'favicon.ico') {
     return context.next();
   }
 
-  // site:x.com/username ensures we only get that account.
-  let searchQueue = `site:x.com/${username}`;
+  // Mimicking the search that the user confirmed works best.
+  // We include both x.com and twitter.com to catch the transition.
+  let searchQueue = `${username} (site:x.com OR site:twitter.com)`;
   
-  // We use past week (qdr:w) and sort by date (sbd:1) as the default.
-  // This ensures results are visible even if there hasn't been a post today.
+  // tbs=qdr:w -> Last week
+  // sbd:1    -> Sort by date
+  // We use qdr:w,sbd:1 as the default for a chronological "feed" feel.
   const timeParam = isRecent ? '&tbs=qdr:w,sbd:1' : '';
 
   const redirectUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQueue)}${timeParam}`;
