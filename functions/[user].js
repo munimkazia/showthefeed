@@ -9,13 +9,12 @@ export async function onRequestGet(context) {
     return context.next();
   }
 
-  // Returning to the 'site:' operator but simplifying the path.
-  // Using the profile root (site:twitter.com/username) is more reliable 
-  // for Google's 'Sort by date' than targeting the /status subfolder.
-  let searchQueue = `site:twitter.com/${username}`;
+  // Strictly targeting x.com as requested.
+  let searchQueue = `site:x.com/${username}`;
   
-  // tbs=qdr:w,sbd:1 -> Past week, Sorted by Date.
-  const timeParam = isRecent ? '&tbs=qdr:w,sbd:1' : '';
+  // Reverting to 24-hour window (qdr:d) with sort-by-date (sbd:1).
+  // If sorting is unstable, the 24h window ensures only the most recent indexed items appear.
+  const timeParam = isRecent ? '&tbs=qdr:d,sbd:1' : '';
 
   const redirectUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQueue)}${timeParam}`;
 
