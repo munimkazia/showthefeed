@@ -9,13 +9,12 @@ export async function onRequestGet(context) {
     return context.next();
   }
 
-  // Mimicking the exact search pattern that works manually.
-  // Using "twitter" instead of "site:x.com" often yields better "Latest" results in Google.
-  let searchQueue = `${username} twitter status`;
+  // Returning to the 'site:' operator but simplifying the path.
+  // Using the profile root (site:twitter.com/username) is more reliable 
+  // for Google's 'Sort by date' than targeting the /status subfolder.
+  let searchQueue = `site:twitter.com/${username}`;
   
-  // tbs=qdr:w -> Last week
-  // sbd:1    -> Sort by date
-  // We use this exact combination as it is the most reliable way to force Google's chronological sort.
+  // tbs=qdr:w,sbd:1 -> Past week, Sorted by Date.
   const timeParam = isRecent ? '&tbs=qdr:w,sbd:1' : '';
 
   const redirectUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQueue)}${timeParam}`;
