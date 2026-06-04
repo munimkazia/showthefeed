@@ -9,13 +9,13 @@ export async function onRequestGet(context) {
     return context.next();
   }
 
-  // To get the latest tweets (and not just the profile page), 
-  // we target the /status/ path where individual tweets live.
-  // This allows Google's "Sort by date" (sbd:1) to work accurately.
-  let searchQueue = `site:x.com/${username}/status OR site:twitter.com/${username}/status`;
+  // Mimicking the exact search pattern that works manually.
+  // Using "twitter" instead of "site:x.com" often yields better "Latest" results in Google.
+  let searchQueue = `${username} twitter status`;
   
   // tbs=qdr:w -> Last week
-  // sbd:1    -> Sort by date (newest first)
+  // sbd:1    -> Sort by date
+  // We use this exact combination as it is the most reliable way to force Google's chronological sort.
   const timeParam = isRecent ? '&tbs=qdr:w,sbd:1' : '';
 
   const redirectUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQueue)}${timeParam}`;
