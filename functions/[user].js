@@ -9,13 +9,13 @@ export async function onRequestGet(context) {
     return context.next();
   }
 
-  // Mimicking the search that the user confirmed works best.
-  // We include both x.com and twitter.com to catch the transition.
-  let searchQueue = `${username} (site:x.com OR site:twitter.com)`;
+  // To get the latest tweets (and not just the profile page), 
+  // we target the /status/ path where individual tweets live.
+  // This allows Google's "Sort by date" (sbd:1) to work accurately.
+  let searchQueue = `site:x.com/${username}/status OR site:twitter.com/${username}/status`;
   
   // tbs=qdr:w -> Last week
-  // sbd:1    -> Sort by date
-  // We use qdr:w,sbd:1 as the default for a chronological "feed" feel.
+  // sbd:1    -> Sort by date (newest first)
   const timeParam = isRecent ? '&tbs=qdr:w,sbd:1' : '';
 
   const redirectUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQueue)}${timeParam}`;
