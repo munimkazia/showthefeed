@@ -1,0 +1,12 @@
+{
+  "name": "showthefeed",
+  "version": "1.0.0",
+  "description": "Bypass social media login walls with Google search redirects",
+  "main": "index.js",
+  "scripts": {
+    "dev": "wrangler pages dev public"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}
